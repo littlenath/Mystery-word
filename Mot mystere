@@ -1,0 +1,85 @@
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+
+using namespace std;
+
+//Fonctions :
+string melangeurLettre(string motMystere) // fonction qui renvoit un string(mot melanger), recevant comme parametere un mot (type string)
+{
+    string motMelanger;
+    int indiceAleatoire;
+    // creer une boucle qui se termine quand il n'y a plus de lettre dans motMystere
+    while(motMystere.size() != 0) {
+        // generation de l'indice
+        indiceAleatoire=rand() % motMystere.size();
+
+        // on ajoute la lettre dans mot melanger
+        motMelanger+=motMystere[indiceAleatoire];
+
+        //on supprime la lettre du mot mystere mise dans mot melanger
+        motMystere.erase(indiceAleatoire, 1);
+    }
+
+    return motMelanger;
+
+}
+
+
+
+
+int main()
+{
+    string mot, tentativeMot, motMelanger;
+
+    int rejouer(0), compteurMax, test(0);
+
+    srand(time(0));
+    cout << "*** BIENVENU DANS LE JEU DU MOT MYSTERE ***" << endl << endl;
+    do { // boucle pour rejouer.
+
+
+        cout << "Entrer le mot a faire deviner: " << endl << endl << endl;
+        cin >> mot; // joueur 1 entre le mot a faire deviner.
+        cout << "Donnez un nombre maximum de coup a votre adversaire" << endl;
+        cin >> compteurMax;
+        string const motMystere(mot); // declare le mot mystere comme constante (sur que le mot ne change pas durant le programme)
+        int const tailleMot(motMystere.size()); // comme caj e suis sur de pas toucher au vrai mot mystere.
+        do {
+
+            motMelanger = melangeurLettre(mot);
+            cout << "Quel est ce mot ?" << endl << mot << endl;
+            cout << "Il vous reste " << compteurMax << " tentatives" << endl;
+            cin >> tentativeMot;
+            compteurMax--;
+            if(tentativeMot==motMystere || compteurMax==0)
+            {
+              test=1;
+            }
+
+
+        } while(test==0);
+
+        if(compteurMax==0)
+        {
+            cout << "vous n'avez pas trouver le mot a temps !" << endl;
+        }
+        else {
+            cout << "Bravo tu as trouve le mot mystere !" << endl;
+        }
+        cout << "voulez vous rejouer ?" << endl << "1. oui" << endl << "2. non" << endl;
+        cin >> rejouer;
+
+    } while(rejouer!=2);
+
+
+
+
+        cout << "ARRET DU PROGRAMME" << endl;
+
+
+
+    return 0;
+}
